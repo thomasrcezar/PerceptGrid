@@ -1,0 +1,9 @@
+# Only send the files needed to install the application.
+**
+!pyproject.toml
+!uv.lock
+!README.md
+!src/
+!src/**
+**/__pycache__/
+**/*.py[cod]

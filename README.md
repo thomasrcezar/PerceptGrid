@@ -75,3 +75,41 @@ Real-world Applications
 ## Status
 
 🚧 PerceptGrid is currently in early development.
+
+## Development
+
+Install Python 3.12 and uv, then run these commands from the repository root:
+
+```bash
+uv sync --locked
+uv run python -m perceptgrid
+```
+
+Check behavior, code style, formatting, and types:
+
+```bash
+uv run pytest
+uv run ruff check .
+uv run ruff format --check .
+uv run mypy
+```
+
+Mypy checks both source code and tests in strict mode. Development tools are
+recorded in `pyproject.toml` and `uv.lock`.
+
+## Docker
+
+With Docker running (in Linux container mode on Docker Desktop), build and run:
+
+```bash
+docker build -t perceptgrid:dev .
+docker run --rm perceptgrid:dev
+```
+
+The image installs the application from the lockfile without development tools
+and runs as a non-root user. The build context excludes local environments and
+datasets. The current application prints its bootstrap status and exits.
+
+The Python base image follows the 3.12 slim-trixie tag, so rebuilding can pick up
+base-image updates. The lockfile fixes application dependencies; it does not pin
+the base image or isolated build dependencies.
