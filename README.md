@@ -7,8 +7,6 @@
   <strong>A modular LiDAR processing foundation for spatial intelligence applications.</strong>
 </p>
 
-# PerceptGrid
-
 PerceptGrid is a Python-based project for learning, processing, and building solutions with LiDAR data.
 
 The project starts with recorded Ouster datasets and will later support live Ouster sensors and other LiDAR sources.
@@ -44,15 +42,20 @@ Analysis / Visualization
 
 ## Technology
 
-* Python
-* NumPy
-* Ouster SDK
-* Open3D
-* Docker
-* pytest
-* Git / GitHub
+Implemented foundation:
 
-More technologies will be added only when they are needed.
+* Python 3.12 with a `src/` package layout
+* uv and a committed dependency lockfile
+* pytest, Ruff, and strict mypy checks
+* Dockerfile for a non-root Linux runtime
+* GitHub Actions for Python quality checks and Docker validation
+* Git
+
+Planned for LiDAR work: Ouster SDK and NumPy. Open3D will be evaluated when
+visualization is useful. These libraries are not installed in the project yet.
+
+Development continues in Python. Rust is deferred until profiling identifies
+a concrete bottleneck and benchmarks justify adding it.
 
 ## Future Direction
 
@@ -74,7 +77,23 @@ Real-world Applications
 
 ## Status
 
-🚧 PerceptGrid is currently in early development.
+Phase 00 is complete locally: the Python bootstrap exists and the application
+prints a status message. Recorded data loading, point-cloud processing,
+detection, tracking, and live sensors are not implemented yet.
+
+The local test, lint, formatting, and type checks pass. Docker build/run and
+the non-root runtime have been verified. The CI workflow is validated locally;
+its first remote run is pending a push to GitHub.
+
+## Tasks and Roadmap
+
+[The project roadmap](docs/ROADMAP.md) is the main task list. It records the
+current state, the active task, ordered next steps, and completion criteria.
+
+The next task is **L01-01: verify Ouster SDK compatibility and select a recording**.
+Phase 01 will add recorded Ouster data inspection through a sensor-independent
+frame model.
+Later phases remain queued until their prerequisites are complete.
 
 ## Development
 
@@ -96,6 +115,20 @@ uv run mypy
 
 Mypy checks both source code and tests in strict mode. Development tools are
 recorded in `pyproject.toml` and `uv.lock`.
+
+## Continuous Integration
+
+`.github/workflows/ci.yml` runs on pushes, pull requests, and manual dispatch.
+It has two independent jobs:
+
+* Python 3.12 quality checks: locked dependency sync, package import, entry point,
+  pytest, Ruff lint, formatting, and strict mypy.
+* Docker validation: image build, entry point smoke test, package import, and
+  verification of the non-root runtime user.
+
+Actions are pinned to commit hashes. CI uses uv 0.12.13, matching the Dockerfile,
+with read-only repository permissions and no retained checkout credentials.
+No image is published by this workflow.
 
 ## Docker
 
