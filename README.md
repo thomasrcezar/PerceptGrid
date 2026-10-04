@@ -75,6 +75,24 @@ Spatial Analytics
 Real-world Applications
 ```
 
+## Scope Direction
+
+Four decisions keep the project from growing into a general-purpose LiDAR
+framework:
+
+1. Phase 01 (recorded Ouster data) is timeboxed and reviews on 2026-11-14.
+   After that date the phase either meets its completion criteria or the
+   blocker is recorded and the phase stops.
+2. One named application target with testable acceptance criteria is selected
+   before Phase 02 begins, so processing scope comes from a real requirement.
+3. Ouster SDK reads recordings and Open3D renders point clouds. PerceptGrid
+   owns the internal frame model and the application behavior; it does not
+   build a decoder, viewer, or renderer.
+4. Detection stays geometric. Learned perception is separate scope.
+
+The details and the current decision task live in
+[the roadmap](docs/ROADMAP.md).
+
 ## Status
 
 Phase 00 is complete locally: the Python bootstrap exists and the application
@@ -92,7 +110,8 @@ current state, the active task, ordered next steps, and completion criteria.
 
 The next task is **L01-01: verify Ouster SDK compatibility and select a recording**.
 Phase 01 will add recorded Ouster data inspection through a sensor-independent
-frame model.
+frame model and is timeboxed to a 2026-11-14 review. Task **D01-01** then
+selects the first application target and gates Phase 02.
 Later phases remain queued until their prerequisites are complete.
 
 ## Development
